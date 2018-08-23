@@ -22,8 +22,8 @@ async function lanzaProceso(orionEntity_type,orionMethodPOST,orionHost,orionPort
                     type: orionEntity_type,
                     id: "Jenkins:Prueba",
                     "fechaUniX": {
-                        "value": fechaUniX,
-                        "type": "Number"
+                        "value": orion.limpiaCadenaJSON(fechaUniX.toString()),
+                        "type": "string"
                         },
                     "fechaFormateada": {
                         "value": orion.limpiaCadenaJSON(fechaFormateada.toString()),
@@ -45,7 +45,7 @@ async function lanzaProceso(orionEntity_type,orionMethodPOST,orionHost,orionPort
         }
 
         console.log("Fin proceso")
-        
+
     } catch(e) {
         console.log(e + util.unixTime(Date.now()))
     }
