@@ -4,7 +4,7 @@
   "description": "Prueba node para Jenkins",
   "main": "bin/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jenkins-mocha tests/*",
     "start": "node bin/app.js"
   },
   "keywords": [
