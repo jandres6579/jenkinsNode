@@ -26,7 +26,6 @@ function fromHTTPToOrionContextBroker (cuerpo,method,orionHost,orionPort,orionPa
                 reject(error)    
             }
             else {
-                console.log("Petición OK: " + util.unixTime(Date.now()));
                 resolve(body);
                 reject('');
             }
@@ -34,6 +33,30 @@ function fromHTTPToOrionContextBroker (cuerpo,method,orionHost,orionPort,orionPa
         })
     })
 }
+
+// Acceder a ORION para recuperar una entidad.
+function obtieneEntidadORION (identificadorFIWARE, ocb_service, ocb_servicePath, ocb_ip, ocb_port) {
+    return new Promise(function(resolve, reject) {
+
+        var options = { method: 'GET',
+                        url: ocb_ip+':'+ocb_port+'/v2/entities/'+identificadorFIWARE,
+                        headers: {'Accept': 'application/json',
+                        'Fiware-Service' : ocb_service,
+                        'Fiware-ServicePath' : ocb_servicePath}
+                    };
+
+        request(options, function (error, response, body) {
+            if (error) { 
+                console.log(error + util.unixTime(Date.now()));
+                reject(error)    
+            }
+            else {
+                resolve(body);
+                reject('');
+            }
+        });
+    });
+};
 
 //Quita los caracteres no compatibles con JSON de la cadena.
 //""","'","(",")",";","<","=",">","\","{","}"
@@ -69,8 +92,8 @@ function limpiaCadenaJSON(cadena) {
 }
 
 module.exports.limpiaCadenaJSON = limpiaCadenaJSON; 
-
 module.exports.fromHTTPToOrionContextBroker = fromHTTPToOrionContextBroker; 
+module.exports.obtieneEntidadORION = obtieneEntidadORION; 
 
 
 

@@ -74,7 +74,7 @@ describe("Ejemplo before, beforeEach y afterEach",function(){
     });
 */
     it('paso1',function(){
-        console.log(numero1 + ' ' + numero2 + ' ' + numero3)
+        //console.log(numero1 + ' ' + numero2 + ' ' + numero3)
         //numero1 será 2 
         //numero2 será 4 
         //numero3 será 6
@@ -83,7 +83,7 @@ describe("Ejemplo before, beforeEach y afterEach",function(){
     });
 
     it('paso2',function(){
-        console.log(numero1 + ' ' + numero2 + ' ' + numero3)
+        //console.log(numero1 + ' ' + numero2 + ' ' + numero3)
         //numero1 será 4 
         //numero2 será 8 
         //numero3 será 12

@@ -4,7 +4,7 @@
   "description": "Prueba node para Jenkins",
   "main": "bin/app.js",
   "scripts": {
-    "test": "mocha tests/* --reporter mocha-junit-reporter",
+    "test": "mocha tests/*",
     "start": "node bin/app.js"
   },
   "keywords": [

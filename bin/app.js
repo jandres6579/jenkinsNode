@@ -9,15 +9,33 @@ async function lanzaProceso(orionEntity_type,orionMethodPOST,orionHost,orionPort
 
         var cuerpo = [];
         var respuestaOrion
+        var respuestaOrion_parse
 
         var fechaUniX = Date.now()
         var fechaFormateada = util.unixTime(Date.now())
 
+        var numEjecuciones=0
+        var numPruebasTest=0
+
         console.log("Empieza proceso")
 
-        console.log("fechaUniX: " + fechaUniX)
-        console.log("fechaFormateada: " + fechaFormateada)
+        //Accedemos a orion para recuperar la entidad y poder obtener asi los campos "numEjecuciones" y "numPruebasTest"
+        respuestaOrion = await orion.obtieneEntidadORION ("Jenkins:Prueba", config.orionService, config.orionServicePath, config.orionHost, config.orionPort);
+    
+        //Parseamos los datos para recorrer entidad por entidad
+        respuestaOrion_parse = JSON.parse(respuestaOrion)
 
+        if (typeof respuestaOrion_parse.numEjecuciones === 'undefined') {
+            numEjecuciones=1
+        } else {
+            numEjecuciones=respuestaOrion_parse.numEjecuciones.value + 1
+        }
+
+        if (typeof respuestaOrion_parse.numPruebasTest === 'undefined') {
+            numPruebasTest=0
+        } else {
+            numPruebasTest=respuestaOrion_parse.numPruebasTest.value
+        }
         cuerpo.push({
                     type: orionEntity_type,
                     id: "Jenkins:Prueba",
@@ -28,6 +46,14 @@ async function lanzaProceso(orionEntity_type,orionMethodPOST,orionHost,orionPort
                     "fechaFormateada": {
                         "value": orion.limpiaCadenaJSON(fechaFormateada.toString()),
                         "type": "string"
+                    },
+                    "numEjecuciones": {
+                        "value": numEjecuciones,
+                        "type": "integer"
+                    },
+                    "numPruebasTest": {
+                        "value": numPruebasTest,
+                        "type": "integer"
                     }
         });
 
