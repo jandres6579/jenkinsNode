@@ -31,22 +31,21 @@ async function lanzaProceso(orionEntity_type,orionMethodPOST,orionHost,orionPort
                     }
         });
 
-        console.log("cuerpo: "+ cuerpo)
-
-/*
         var strjson = JSON.stringify({
             entities: cuerpo,
             actionType: orionActionType
         });
+
+        console.log("strjson: " +  strjson)
 
         respuestaOrion = await orion.fromHTTPToOrionContextBroker(strjson,orionMethodPOST,orionHost,orionPort,orionPathV2OpUpdate,orionService,orionServicePath);
 
         if (respuestaOrion.length !=0 ) {
             console.log(respuestaOrion + util.unixTime(Date.now()))    
         }
-*/
 
         console.log("Fin proceso")
+        
     } catch(e) {
         console.log(e + util.unixTime(Date.now()))
     }
