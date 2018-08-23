@@ -16,4 +16,9 @@ function unixTime(unixDate) {
     return cadena1
   };
   
+  function addTwoNumbers(x, y) {
+    return x + y;
+  }
+  
   module.exports.unixTime = unixTime; 
+  module.exports.addTwoNumbers = addTwoNumbers;
