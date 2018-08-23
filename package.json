@@ -1,0 +1,20 @@
+{
+  "name": "pruebaNode",
+  "version": "1.0.0",
+  "description": "Prueba node para Jenkins",
+  "main": "bin/app.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node bin/app.js"
+  },
+  "keywords": [
+    "pruebas",
+    "jenkins",
+    "node"
+  ],
+  "author": "Juan Andrés Sánchez Segado",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.87.0"
+  }
+}
