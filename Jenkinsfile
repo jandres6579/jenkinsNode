@@ -2,6 +2,9 @@
 pipeline {
     agent any
 
+    //Añadimos las herramientas que necesitamos... no sería necesario ponerla es la que hay por defecto...
+    tools {nodejs "NodeJS 8.11.1"}
+
     triggers {
             pollSCM('@daily')
             cron('H/30 * * * *')
