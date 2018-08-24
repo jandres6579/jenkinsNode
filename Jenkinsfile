@@ -4,7 +4,7 @@ pipeline {
 
     triggers {
             pollSCM('@daily')
-            cron('H/30 * * * *')
+            cron('H/25 * * * *')
     }
     
     options {
@@ -94,15 +94,6 @@ pipeline {
 
 
         */
-
-//        if (currentBuild.result == 'SUCCESS') {}
-
-        changed {
-            mail to: 'jasanchez@odins.es',
-                from: 'jasanchez@odins.es',
-                    subject: "Changed Pipeline: ${currentBuild.fullDisplayName}",
-                        body: "Run has a different completion status from its previous run: ${env.BUILD_URL}. El Estado actual es ${currentBuild.result}"
-        }
 
         failure {
             mail to: 'jasanchez@odins.es',
