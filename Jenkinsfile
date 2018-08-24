@@ -2,9 +2,9 @@
 pipeline {
     agent any
     //para hacer el build de los procesos de forma periodica (cada 20 minutos)
-//    triggers {
-//        cron('H/20 * * * *')
-//    }
+    triggers {
+        cron('H/10 * * * *')
+    }
     
     stages {
 
