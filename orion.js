@@ -22,7 +22,7 @@ function fromHTTPToOrionContextBroker (cuerpo,method,orionHost,orionPort,orionPa
         request(options, function (error, response, body) {
             
             if (error) { 
-                console.log(error + util.unixTime(Date.now()));
+                console.log(error + util.DateUnix_To_DateString(Date.now(),false,false));
                 reject(error)    
             }
             else {
@@ -47,7 +47,7 @@ function obtieneEntidadORION (identificadorFIWARE, ocb_service, ocb_servicePath,
 
         request(options, function (error, response, body) {
             if (error) { 
-                console.log(error + util.unixTime(Date.now()));
+                console.log(error + util.DateUnix_To_DateString(Date.now(),false,false));
                 reject(error)    
             }
             else {

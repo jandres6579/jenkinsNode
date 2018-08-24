@@ -1,5 +1,9 @@
 var assert = require('chai').assert;
 
+//Ejemplo otra forma de hacer assert y utlización de funcionalidad de otros módulos. (con IMPORT)
+var expect = require('chai').expect;
+var util = require('../util');
+
 
 /* Sintaxis
 - assert: vamos a poder hacer comprobaciones de valores, para asegurar que obtenemos los valores esperados cuando llamamos a una función.
@@ -25,7 +29,6 @@ describe("Numbers",function(){
   })
 });
 
-
 describe("Prueba modulo Chai",function(){
     it('isAtLeastTrue',function(){
       // isAtLeast (Como poco...) Mayor que...
@@ -41,6 +44,113 @@ describe("Prueba modulo Chai",function(){
         assert.isNotNull(null);
     })
 */    
+});
+
+describe("Prueba modulo util",function(){
+
+  it('DateUnix_To_DateString() UTCformat=false, PrintOffset=false',function(){
+    try {
+      var unixTime = 1535091451000;
+      var fechaFormateadaCorrecta = "2018-08-24 08:17:31";
+
+      var fechaFormateadaCalculada = util.DateUnix_To_DateString(unixTime,false,false);
+
+      assert.equal(fechaFormateadaCalculada, fechaFormateadaCorrecta);
+    } catch(e) {
+      console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
+      //Fuerza fallo porque ha fallado la ejecución del test.
+      assert.equal(1, 0);      
+    }
+  });
+
+  it('DateUnix_To_DateString() UTCformat=true, PrintOffset=false',function(){
+    try {
+      var unixTime = 1535091451000;
+      var fechaFormateadaCorrecta = "2018-08-24 06:17:31";
+
+      var fechaFormateadaCalculada = util.DateUnix_To_DateString(unixTime,true,false);
+
+      assert.equal(fechaFormateadaCalculada, fechaFormateadaCorrecta);
+    } catch(e) {
+      console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
+      //Fuerza fallo porque ha fallado la ejecución del test.
+      assert.equal(1, 0);      
+    }
+  });
+
+  it('DateUnix_To_DateString() UTCformat=false, PrintOffset=true',function(){
+    try {
+      var x = new Date();
+      var offset= -x.getTimezoneOffset();
+      
+      var unixTime = 1535091451000;
+      var fechaFormateadaCorrecta = "2018-08-24 08:17:31" + 
+            (offset>=0?"+":"-")+('0' + (parseInt(offset/60)).toString()).slice(-2)+":"+('0' + (offset%60).toString()).slice(-2)
+
+      var fechaFormateadaCalculada = util.DateUnix_To_DateString(unixTime,false,true);
+
+      assert.equal(fechaFormateadaCalculada, fechaFormateadaCorrecta);
+    } catch(e) {
+      console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
+      //Fuerza fallo porque ha fallado la ejecución del test.
+      assert.equal(1, 0);      
+    }
+  });
+
+  it('DateUnix_To_DateString() UTCformat=true, PrintOffset=true',function(){
+    try {
+      var x = new Date();
+      var offset= -x.getTimezoneOffset();
+
+      var unixTime = 1535091451000;
+      var fechaFormateadaCorrecta = "2018-08-24 06:17:31" + 
+            (offset>=0?"+":"-")+('0' + (parseInt(offset/60)).toString()).slice(-2)+":"+('0' + (offset%60).toString()).slice(-2)
+
+      var fechaFormateadaCalculada = util.DateUnix_To_DateString(unixTime,true,true);
+
+      assert.equal(fechaFormateadaCalculada, fechaFormateadaCorrecta);
+    } catch(e) {
+      console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
+      //Fuerza fallo porque ha fallado la ejecución del test.
+      assert.equal(1, 0);      
+    }
+  });
+
+  it('DateString_To_DateUnix()',function(){
+    try {
+      var x = "2018-08-24T07:49:06.000Z";
+      
+      var fechaUnixCorrecta = 1535096946000;
+
+      var fechaUnixCalculada = util.DateString_To_DateUnix(x);
+
+      assert.equal(fechaUnixCalculada, fechaUnixCorrecta);
+    } catch(e) {
+      console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
+      //Fuerza fallo porque ha fallado la ejecución del test.
+      assert.equal(1, 0);      
+    }
+  });
+
+
+  it('addTwoNumbers()',function(){
+    try {  
+      // 1. ARRANGE
+      var x = 5;
+      var y = 1;
+      var sum1 = x + y;
+  
+      // 2. ACT
+      var sum2 = util.addTwoNumbers(x, y);
+  
+      // 3. ASSERT
+      expect(sum2).to.be.equal(sum1);
+    } catch(e) {
+      console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
+      //Fuerza fallo porque ha fallado la ejecución del test.
+      assert.equal(1, 0);      
+    }      
+  });
 });
 
 
@@ -91,28 +201,6 @@ describe("Ejemplo before, beforeEach y afterEach",function(){
         assert.isAtLeast(numero3,numero1+numero2);
     });
 })    
-
-//Ejemplo otra forma de hacer assert y utlización de funcionalidad de otros módulos. (con IMPORT)
-var expect = require('chai').expect;
-var util = require('../util');
-
-describe('addTwoNumbers()', function () {
-    it('should add two numbers', function () {
-      
-      // 1. ARRANGE
-      var x = 5;
-      var y = 1;
-      var sum1 = x + y;
-  
-      // 2. ACT
-      var sum2 = util.addTwoNumbers(x, y);
-  
-      // 3. ASSERT
-      expect(sum2).to.be.equal(sum1);
-  
-    });
-});
-
 
 /* Ejemplo completo Asincrono
 Vamos a ver un ejemplo más completo, con métodos before y after. Además, utilizaremos métodos asíncronos para inicializar la base de datos y para resetearla 

@@ -12,12 +12,10 @@ async function lanzaProceso(orionEntity_type,orionMethodPOST,orionHost,orionPort
         var respuestaOrion_parse
 
         var fechaUniX = Date.now()
-        var fechaFormateada = util.unixTime(Date.now())
+        var fechaFormateada = util.DateUnix_To_DateString(Date.now(),false,false)
 
         var numEjecuciones=0
         var numPruebasTest=0
-
-        console.log("Empieza proceso")
 
         //Accedemos a orion para recuperar la entidad y poder obtener asi los campos "numEjecuciones" y "numPruebasTest"
         respuestaOrion = await orion.obtieneEntidadORION ("Jenkins:Prueba", config.orionService, config.orionServicePath, config.orionHost, config.orionPort);
@@ -62,18 +60,16 @@ async function lanzaProceso(orionEntity_type,orionMethodPOST,orionHost,orionPort
             actionType: orionActionType
         });
 
-        console.log("strjson: " +  strjson)
+        //console.log("strjson: " +  strjson)
 
         respuestaOrion = await orion.fromHTTPToOrionContextBroker(strjson,orionMethodPOST,orionHost,orionPort,orionPathV2OpUpdate,orionService,orionServicePath);
 
         if (respuestaOrion.length !=0 ) {
-            console.log(respuestaOrion + util.unixTime(Date.now()))    
+            console.log(respuestaOrion + util.DateUnix_To_DateString(Date.now(),false,false))    
         }
 
-        console.log("Fin proceso")
-
     } catch(e) {
-        console.log(e + util.unixTime(Date.now()))
+        console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
     }
 }
 
