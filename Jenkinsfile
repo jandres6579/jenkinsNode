@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo 'Instalando dependencias del proyecto (package.json)...'
                 sh '''
-                    bash -c "${WORKSPACE}/npm install"
+                    bash -c "npm install"
                 '''
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 echo 'Realizando testeo...'
                 sh '''
-                    bash -c "${WORKSPACE}/npm test"
+                    bash -c "npm test"
                 '''
             }
         }
@@ -47,7 +47,7 @@ pipeline {
                 echo 'Ejecutando aplicación...'
                 sh '''
                     #De esta forma se pueden añaden comentarios.
-                    bash -c "${WORKSPACE}/npm start &"
+                    bash -c "npm start &"
                    '''
             }
         }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 echo 'Muestra información entidad...'
                 sh '''
-                    bash -c "${WORKSPACE}/./consultaEntidad.sh &"
+                    bash -c "./consultaEntidad.sh &"
                 '''
             }
         }
