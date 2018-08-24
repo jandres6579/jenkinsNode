@@ -36,7 +36,7 @@ pipeline {
             steps {
                 echo 'Obteniendo información del sistema...'
                 sh '''
-                    bash -c "echo $PATH && npm --version && grunt --version && cd pavo"
+                    bash -c "echo $PATH && npm --version && grunt --version"
                 '''
             }
         }
