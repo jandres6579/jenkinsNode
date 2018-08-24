@@ -97,26 +97,30 @@ pipeline {
 
         changed {
             mail to: 'jasanchez@odins.es',
-                subject: "Changed Pipeline: ${currentBuild.fullDisplayName}",
-                    body: "Run has a different completion status from its previous run: ${env.BUILD_URL}"
+                from: 'jasanchez@odins.es'
+                    subject: "Changed Pipeline: ${currentBuild.fullDisplayName}",
+                        body: "Run has a different completion status from its previous run: ${env.BUILD_URL}"
         }
 
         failure {
             mail to: 'jasanchez@odins.es',
-                subject: "Failure Pipeline: ${currentBuild.fullDisplayName}",
-                    body: "Run has a failed status: ${env.BUILD_URL}"
+                from: 'jasanchez@odins.es'
+                    subject: "Failure Pipeline: ${currentBuild.fullDisplayName}",
+                        body: "Run has a failed status: ${env.BUILD_URL}"
         }
 
         fixed {
             mail to: 'jasanchez@odins.es',
-                subject: "Fixed Pipeline: ${currentBuild.fullDisplayName}",
-                    body: "Run is successful and the previous run failed or was unstable: ${env.BUILD_URL}"
+                    from: 'jasanchez@odins.es'
+                        subject: "Fixed Pipeline: ${currentBuild.fullDisplayName}",
+                            body: "Run is successful and the previous run failed or was unstable: ${env.BUILD_URL}"
         }
 
         success {
             mail to: 'jasanchez@odins.es',
-                subject: "Success Pipeline: ${currentBuild.fullDisplayName}",
-                    body: "Run has a success status: ${env.BUILD_URL}"
+                    from: 'jasanchez@odins.es'            
+                        subject: "Success Pipeline: ${currentBuild.fullDisplayName}",
+                            body: "Run has a success status: ${env.BUILD_URL}"
         }
     }
 }
