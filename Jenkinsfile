@@ -1,6 +1,5 @@
 // comments
 pipeline {
-    try {    
         agent any
 
         triggers {
@@ -21,63 +20,73 @@ pipeline {
                     artifactDaysToKeepStr: artifacts are only kept up to this days.
                     artifactNumToKeepStr: only this number of builds have their artifacts kept.
             */
-            buildDiscarder(logRotator(numToKeepStr: 20))
+            buildDiscarder(logRotator(numToKeepStr: "20"))
         }
+        try {  
+            stages {
 
-        stages {
+                stage('CheckOut-Git') {
+                    steps {
+                        echo 'CheckOut-Git...'
+                        git poll: true, url: 'https://github.com/jandres6579/jenkinsNode.git'
+                    }
+                }
 
-            stage('CheckOut-Git') {
-                steps {
-                    echo 'CheckOut-Git...'
-                    git poll: true, url: 'https://github.com/jandres6579/jenkinsNode.git'
+                stage('Obtain system information..') {
+                    steps {
+                        echo 'Obteniendo información del sistema...'
+                        sh '''
+                            bash -c "echo $PATH && npm --version && grunt --version && cd paco"
+                        '''
+                    }
+                }
+                
+                stage('Install dependencies') {
+                    steps {
+                        echo 'Instalando dependencias del proyecto (package.json)...'
+                        sh '''
+                            bash -c "npm install"
+                        '''
+                    }
+                }
+
+                stage('TestingApp') {
+                    steps {
+                        echo 'Realizando testeo...'
+                        sh '''
+                            bash -c "npm test"
+                        '''
+                    }
+                }
+
+                stage('RunningApp') {
+                    steps {
+                        echo 'Ejecutando aplicación...'
+                        sh '''
+                            #De esta forma se pueden añaden comentarios.
+                            bash -c "npm start &"
+                        '''
+                    }
+                }
+
+                stage('Obtain result') {
+                    steps {
+                        echo 'Muestra información entidad...'
+                        sh '''
+                            bash -c "./consultaEntidad.sh"
+                        '''
+                    }
                 }
             }
+        } catch (err) {
 
-            stage('Obtain system information..') {
-                steps {
-                    echo 'Obteniendo información del sistema...'
-                    sh '''
-                        bash -c "echo $PATH && npm --version && grunt --version"
-                    '''
-                }
-            }
-            
-            stage('Install dependencies') {
-                steps {
-                    echo 'Instalando dependencias del proyecto (package.json)...'
-                    sh '''
-                        bash -c "npm install"
-                    '''
-                }
-            }
+            currentBuild.result = "FAILURE"
 
-            stage('TestingApp') {
-                steps {
-                    echo 'Realizando testeo...'
-                    sh '''
-                        bash -c "npm test"
-                    '''
-                }
-            }
+                mail to: 'jasanchez@odins.es',
+                    subject: "Exception Error Pipeline: ${currentBuild.fullDisplayName}",
+                        body: "Project build error is here: ${env.BUILD_URL}"
 
-            stage('RunningApp') {
-                steps {
-                    echo 'Ejecutando aplicación...'
-                    sh '''
-                        #De esta forma se pueden añaden comentarios.
-                        bash -c "npm start &"
-                    '''
-                }
-            }
-
-            stage('Obtain result') {
-                steps {
-                    echo 'Muestra información entidad...'
-                    sh '''
-                        bash -c "./consultaEntidad.sh"
-                    '''
-                }
-            }
+            throw err
         }
 
         post {
@@ -120,16 +129,7 @@ pipeline {
                         body: "Run has a success status: ${env.BUILD_URL}"
             }
         }
-    } catch (err) {
 
-        currentBuild.result = "FAILURE"
-
-            mail to: 'jasanchez@odins.es',
-                subject: "Exception Error Pipeline: ${currentBuild.fullDisplayName}",
-                    body: "Project build error is here: ${env.BUILD_URL}"
-
-        throw err
-    }
 }
 
 /*
