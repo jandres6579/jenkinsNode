@@ -94,12 +94,8 @@ pipeline {
 
 
         */
-
-        failure {
-            mail to: 'jasanchez@odins.es',
-                from: 'jasanchez@odins.es',
-                    subject: "Failure Pipeline: ${currentBuild.fullDisplayName}",
-                        body: "Run has a failed status: ${env.BUILD_URL}"
+        always {
+            deleteDir()
         }
 
         fixed {
@@ -107,6 +103,13 @@ pipeline {
                     from: 'jasanchez@odins.es',
                         subject: "Fixed Pipeline: ${currentBuild.fullDisplayName}",
                             body: "Run is successful and the previous run failed or was unstable: ${env.BUILD_URL}"
+        }
+
+        failure {
+            mail to: 'jasanchez@odins.es',
+                from: 'jasanchez@odins.es',
+                    subject: "Failure Pipeline: ${currentBuild.fullDisplayName}",
+                        body: "Run has a failed status: ${env.BUILD_URL}"
         }
 
         success {
