@@ -87,7 +87,7 @@ pipeline {
             }
         }
 
-        stage ('CleanUp') {
+        stage ('CleanUp workspace') {
             //Limpiamos el workspace para no llenar los discos
            steps {
                 echo 'Borrardo de workspace...'
