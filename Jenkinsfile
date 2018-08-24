@@ -115,7 +115,7 @@ pipeline {
 
         success {
             mail to: 'jasanchez@odins.es',
-                subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                subject: "Success Pipeline: ${currentBuild.fullDisplayName}",
                     body: "Run has a success status: ${env.BUILD_URL}"
         }
     }
