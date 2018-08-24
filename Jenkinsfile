@@ -36,7 +36,7 @@ pipeline {
             steps {
                 echo 'Obteniendo información del sistema...'
                 sh '''
-                    bash -c "echo $PATH && npm --version && grunt --version"
+                    bash -c "echo $PATH && npm --version && grunt --version && cd pavo"
                 '''
             }
         }
@@ -95,11 +95,13 @@ pipeline {
 
         */
 
+//        if (currentBuild.result == 'SUCCESS') {}
+
         changed {
             mail to: 'jasanchez@odins.es',
                 from: 'jasanchez@odins.es',
                     subject: "Changed Pipeline: ${currentBuild.fullDisplayName}",
-                        body: "Run has a different completion status from its previous run: ${env.BUILD_URL}"
+                        body: "Run has a different completion status from its previous run: ${env.BUILD_URL}. El Estado actual es ${currentBuild.result}"
         }
 
         failure {
