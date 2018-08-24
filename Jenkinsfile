@@ -4,7 +4,7 @@ pipeline {
 
     triggers {
             pollSCM('@daily')
-            cron('H/25 * * * *')
+            cron('H/30 * * * *')
     }
     
     options {
@@ -20,7 +20,7 @@ pipeline {
                 artifactDaysToKeepStr: artifacts are only kept up to this days.
                 artifactNumToKeepStr: only this number of builds have their artifacts kept.
         */
-        buildDiscarder(logRotator(numToKeepStr: "20"))
+        buildDiscarder(logRotator(numToKeepStr: "5"))
     }
 
     stages {
