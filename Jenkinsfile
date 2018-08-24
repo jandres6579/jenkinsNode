@@ -2,8 +2,10 @@
 pipeline {
     agent any
 
-    //Añadimos las herramientas que necesitamos... no sería necesario ponerla es la que hay por defecto...
-    tools {nodejs "NodeJS 8.11.1"}
+    //Alias a herramientas instaladas en Jenkins
+    tools {
+        nodejs "NodeJS 8.11.1"
+        }
 
     triggers {
             pollSCM('@daily')
@@ -24,6 +26,10 @@ pipeline {
                 artifactNumToKeepStr: only this number of builds have their artifacts kept.
         */
         buildDiscarder(logRotator(numToKeepStr: "5"))
+
+        //Si en 3 días no ha terminado que falle.
+        timeout(time: 76, unit: 'HOURS') 
+
     }
 
     stages {
@@ -80,6 +86,14 @@ pipeline {
                 '''
             }
         }
+
+        stage ('CleanUp') {
+            //Limpiamos el workspace para no llenar los discos
+           steps {
+                echo 'Borrardo de workspace...'
+                deleteDir()
+           }
+        }
     }
 
     post {
@@ -97,9 +111,10 @@ pipeline {
 
 
         */
-        always {
-            deleteDir()
-        }
+        //Otra opcion de borrar el workspace podría ser hacerlo en segundo plano y no como un paso más visible
+        //always {
+        //    deleteDir()
+        //}
 
         fixed {
             mail to: 'jasanchez@odins.es',
