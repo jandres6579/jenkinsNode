@@ -133,11 +133,30 @@ describe("Prueba modulo util",function(){
   });
 
 
-  it('addTwoNumbers()',function(){
+  it('addTwoNumbers() - Prueba 1',function(){
     try {  
       // 1. ARRANGE
       var x = 5;
       var y = 1;
+      var sum1 = x + y;
+  
+      // 2. ACT
+      var sum2 = util.addTwoNumbers(x, y);
+  
+      // 3. ASSERT
+      expect(sum2).to.be.equal(sum1);
+    } catch(e) {
+      console.log(e + util.DateUnix_To_DateString(Date.now(),false,false))
+      //Fuerza fallo porque ha fallado la ejecución del test.
+      assert.equal(1, 0);      
+    }      
+  });
+
+  it('addTwoNumbers() - Prueba 2',function(){
+    try {  
+      // 1. ARRANGE
+      var x = 6;
+      var y = 6;
       var sum1 = x + y;
   
       // 2. ACT
