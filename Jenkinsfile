@@ -86,7 +86,7 @@ pipeline {
                 '''
             }
         }
-
+/*
         stage ('CleanUp workspace') {
             //Limpiamos el workspace para no llenar los discos
            steps {
@@ -94,6 +94,8 @@ pipeline {
                 deleteDir()
            }
         }
+*/
+        
     }
 
     post {
