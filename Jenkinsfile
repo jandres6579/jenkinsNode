@@ -45,7 +45,7 @@ pipeline {
             steps {
                 echo 'Obteniendo información del sistema...'
                 sh '''
-                    bash -c "echo $PATH && npm --version && grunt --version"
+                    bash -c "echo $PATH && npm --version && grunt --version && git branch"
                 '''
             }
         }
