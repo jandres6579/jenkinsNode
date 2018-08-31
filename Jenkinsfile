@@ -41,6 +41,32 @@ pipeline {
             }
         }
 
+        stage('Git Checkout - b1.0') {
+            //Este paso lo ejecuta sólo si estamos en la rama indicada.
+            when {
+                branch 'b1.0'
+            }
+            steps {
+                echo 'Realizando Git checkout a b1.0...'
+                sh '''
+                    bash -c "git checkout b1.0"
+                '''
+            }
+        }
+
+        stage('Git Checkout - master') {
+            //Este paso lo ejecuta sólo si estamos en el master.
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Realizando Git checkout a master...'
+                sh '''
+                    bash -c "git checkout master"
+                '''
+            }
+        }
+        
         stage('Obtain system information..') {
             steps {
                 echo 'Obteniendo información del sistema...'
@@ -86,7 +112,7 @@ pipeline {
                 '''
             }
         }
-/*
+
         stage ('CleanUp workspace') {
             //Limpiamos el workspace para no llenar los discos
            steps {
@@ -94,7 +120,6 @@ pipeline {
                 deleteDir()
            }
         }
-*/
         
     }
 
