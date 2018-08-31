@@ -45,7 +45,7 @@ pipeline {
             steps {
                 echo 'Obteniendo información del sistema...'
                 sh '''
-                    bash -c "echo $PATH && npm --version && grunt --version"
+                    bash -c "echo $PATH && npm --version && grunt --version && git branch"
                 '''
             }
         }
@@ -86,7 +86,7 @@ pipeline {
                 '''
             }
         }
-
+/*
         stage ('CleanUp workspace') {
             //Limpiamos el workspace para no llenar los discos
            steps {
@@ -94,6 +94,8 @@ pipeline {
                 deleteDir()
            }
         }
+*/
+        
     }
 
     post {
