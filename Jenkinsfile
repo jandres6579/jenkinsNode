@@ -9,7 +9,9 @@ pipeline {
 
     triggers {
             pollSCM('@daily')
-            cron('H/30 * * * *')
+            //Cada media hora
+            //cron('H/30 * * * *')
+            cron('H * * * *')
     }
     
     options {
